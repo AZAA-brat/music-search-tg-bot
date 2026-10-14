@@ -1,12 +1,12 @@
-from aiogram import types
+from aiogram import types, Router
 import asyncio
 import os
-from config import dp
 from functions.extractor import simultaneous
 from utils.phrases import get_text
 from utils.dictionaries import photo_msg_memory, memory
+router = Router()
 
-@dp.callback_query()
+@router.callback_query()
 async def handle_buttons(callback):
     status_msg = await callback.message.answer("⌛️")
     link = memory[callback.from_user.id]

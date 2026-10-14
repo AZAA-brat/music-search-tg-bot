@@ -1,14 +1,12 @@
-from aiogram import F
+from aiogram import F, Router
 import asyncio
 from functions.cleaner import clean_title
 from functions.search_engine import search_songs
 from functions.slicer import firstslice
 from utils.phrases import get_text
 from utils.dictionaries import search_memory, title_memory
-from config import dp
-
-
-@dp.callback_query(F.data == "download")
+router = Router()
+@router.callback_query(F.data == "download")
 async def handle_inst_link(callback):
     title = title_memory[callback.from_user.id]
     title = clean_title(title)

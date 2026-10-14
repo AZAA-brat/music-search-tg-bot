@@ -11,7 +11,7 @@ import handlers.start as start
 import handlers.user_choice as user_choice
 load_dotenv()
 setup_logger()
-dp.include_routers(choice_handler.router, downloader.router, language.router, link_downloader.router, start.router, user_choice.router)
+dp.include_routers(start.router, downloader.router, choice_handler.router, language.router, link_downloader.router, user_choice.router)
 logger = logging.getLogger(__name__)
 
 async def main():

@@ -1,5 +1,4 @@
-from aiogram import F, types
-from config import dp
+from aiogram import F, types, Router
 from utils.phrases import get_text
 from functions.search_engine import search_songs
 from functions.slicer import firstslice
@@ -8,7 +7,8 @@ import asyncio
 import logging
 from utils.dictionaries import title_memory, memory, photo_msg_memory, search_memory
 logger = logging.getLogger(__name__)
-@dp.message(F.text)
+router = Router()
+@router.message(F.text)
 async def handle_any_text(message):
     if "http" in message.text:
         try:

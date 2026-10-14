@@ -1,11 +1,11 @@
-from aiogram import types
+from aiogram import types, Router
 import asyncio
 import os
-from config import dp
 from functions.extractor import simultaneous
 from utils.phrases import get_text
 from utils.dictionaries import search_memory
-@dp.callback_query(lambda c: c.data.isdigit())
+router = Router()
+@router.callback_query(lambda c: c.data.isdigit())
 async def handle_user_choice(callback):
     index = int(callback.data) - 1
     chosen = search_memory[callback.from_user.id][index]
