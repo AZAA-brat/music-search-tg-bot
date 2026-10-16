@@ -45,6 +45,6 @@ async def handle_any_text(message):
             return
         search_memory[message.from_user.id] = result_url
         text, keyboard = firstslice(result_url[0:10])
-        header = get_text("Search_results", message.from_user.id)
+        header = get_text("search_results", message.from_user.id)
         text = header + "\n\n" + text
         await message.answer(text, reply_markup=keyboard)

@@ -1,4 +1,4 @@
-from aiogram import types, Router
+from aiogram import types, Router, F
 import asyncio
 import os
 from functions.extractor import simultaneous
@@ -6,7 +6,7 @@ from utils.phrases import get_text
 from utils.dictionaries import photo_msg_memory, memory
 router = Router()
 
-@router.callback_query()
+@router.callback_query(F.data == "audio", "360", "480", "720", "1080")
 async def handle_buttons(callback):
     status_msg = await callback.message.answer("⌛️")
     link = memory[callback.from_user.id]
