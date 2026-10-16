@@ -6,6 +6,7 @@ from functions.thumbnail import thumbnail
 import asyncio
 import logging
 from utils.dictionaries import title_memory, memory, photo_msg_memory, search_memory
+from keyboards.inline import quality_kb
 logger = logging.getLogger(__name__)
 router = Router()
 @router.message(F.text)
@@ -20,16 +21,9 @@ async def handle_any_text(message):
         title_memory[message.from_user.id] = info["title"]
         thumb_url = info["thumbnail"]
         memory[message.from_user.id] = message.text
-        rows = [
-            [types.InlineKeyboardButton(text="📹 360p", callback_data="360"),
-             types.InlineKeyboardButton(text="📹 480p", callback_data="480")],
-            [types.InlineKeyboardButton(text="📹 720p", callback_data="720"),
-             types.InlineKeyboardButton(text="📹 1080p", callback_data="1080")],
-            [types.InlineKeyboardButton(text="🎵 audio", callback_data="audio")],
-        ]
         if "instagram.com" in message.text:
-            rows.append([types.InlineKeyboardButton(text="📥 download audio", callback_data="download")])
-        kb = types.InlineKeyboardMarkup(inline_keyboard=rows)
+            quality_kb.append([types.InlineKeyboardButton(text="📥 download audio", callback_data="download")])
+        kb = types.InlineKeyboardMarkup(inline_keyboard=quality_kb)
 
         sent_photo = await message.answer_photo(thumb_url, caption=info["title"], reply_markup=kb)
         photo_msg_memory[message.from_user.id] = sent_photo
