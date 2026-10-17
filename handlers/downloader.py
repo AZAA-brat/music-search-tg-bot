@@ -1,8 +1,5 @@
 from aiogram import F, Router
 import asyncio
-
-from unicodedata import lookup
-
 from functions.cleaner import clean_title
 from functions.search_engine import search_songs
 from functions.slicer import firstslice

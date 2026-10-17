@@ -1,50 +1,34 @@
-from aiogram import types, Router, F
+from aiogram import types, Router
+from aiogram.types import CallbackQuery, Audio
 import asyncio
 import os
-from functions.extractor import simultaneous
+import logging
+from functions.extractor import download_media
+from functions.options import audio_options, video_options
 from utils.phrases import get_text
-from utils.dictionaries import photo_msg_memory, memory
+from utils.dictionaries import photo_msg_memory, memory, link_memory
+from handlers.sender import send_media
+from keyboards.callbacks import QualityCB, AudioCB
 router = Router()
+logger = logging.getLogger(__name__)
 
-@router.callback_query(F.data == "audio", "360", "480", "720", "1080")
-async def handle_buttons(callback):
+@router.callback_query(QualityCB.filter())
+async def handle_quality(callback: CallbackQuery, callback_data: QualityCB):
     status_msg = await callback.message.answer("⌛️")
-    link = memory[callback.from_user.id]
-    if callback.data == "audio":
-        options = {
-    "format": "bestaudio/best",
-    "postprocessors": [{
-        "key": "FFmpegExtractAudio",
-        "preferredcodec": "mp3",
-    }],
-    "outtmpl": f"downloads/{callback.from_user.id}",
-}
-        filename = types.FSInputFile(f"downloads/{callback.from_user.id}.mp3")
-    else:
-        options = {"format": f"bestvideo[height<={callback.data}]+bestaudio/best",
-                   "outtmpl": f"downloads/{callback.from_user.id}.%(ext)s"}
+    link = link_memory.get(callback.from_user.id, None)
+    if link is None:
+        await callback.message.answer(get_text("unknown", callback.from_user.id))
+        return
+    options = video_options(user_id, callback_data.quality)
     try:
-        info = await asyncio.to_thread(simultaneous, link, options)
+        info = await asyncio.to_thread(download_media, link, options)
     except Exception:
+        logger.error("There was a problem downloading the media.", exc_info=True)
         await callback.message.answer(get_text("error_download", callback.from_user.id))
         return
-    if callback.data == "audio":
-        path = f"downloads/{callback.from_user.id}.mp3"
-        filename = types.FSInputFile(f"downloads/{callback.from_user.id}.mp3", filename=f"{info['title']}.mp3")
-        caption = f"{info['title']}, {info.get('uploader', 'Неизвестный')}"
-        await callback.message.answer_audio(filename, caption=caption + f"\n{get_text('bot_footer', callback.from_user.id)}")
-        await status_msg.delete()
-        photo_msg = photo_msg_memory.get(callback.from_user.id)
-        if photo_msg:
-            await photo_msg.delete()
-        os.remove(path)
-    else:
-        path2 = f"downloads/{callback.from_user.id}.mp4"
-        filename2 = types.FSInputFile(f"downloads/{callback.from_user.id}.mp4")
-        caption = f"{info['title']}, {info.get('uploader', 'Неизвестный')}"
-        await callback.message.answer_video(filename2, caption=caption + f"\n{get_text('bot_footer', callback.from_user.id)}")
-        await status_msg.delete()
-        photo_msg = photo_msg_memory.get(callback.from_user.id)
-        if photo_msg:
-            await photo_msg.delete()
-        os.remove(path2)
+
+
+@router.callback_query(AudioCB.filter())
+async def handle_audio(callback: CallbackQuery, callback_data: audio):
+
+
