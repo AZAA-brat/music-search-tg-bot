@@ -5,11 +5,12 @@ def audio_options(user_id):
         "key": "FFmpegExtractAudio",
         "preferredcodec": "mp3",
     }],
-    "outtmpl": f"downloads/{user_id}",
+    "outtmpl": f"downloads/{user_id}.%(ext)s",
 }
     return options
 
 def video_options(user_id, quality):
     options = {"format": f"bestvideo[height<={quality}]+bestaudio/best",
-               "outtmpl": f"downloads/{user_id}.%(ext)s"}
+               "outtmpl": f"downloads/{user_id}.%(ext)s",
+               "merge_output_format": "mp4"}
     return options

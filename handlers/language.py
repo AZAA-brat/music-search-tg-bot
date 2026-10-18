@@ -1,5 +1,6 @@
 from aiogram import F, Router
-from utils.phrases import lang_memory, get_text
+from utils.phrases import get_text
+from utils.dictionaries import lang_memory
 from keyboards.reply import rus, eng
 router = Router()
 LANG_CODE = {
