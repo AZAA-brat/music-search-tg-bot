@@ -6,7 +6,7 @@ from utils.phrases import get_text
 from functions.search_engine import search_songs
 from functions.slicer import firstslice
 from functions.thumbnail import thumbnail
-from utils.dictionaries import title_memory, memory, photo_msg_memory, search_memory
+from utils.dictionaries import title_memory, link_memory, photo_msg_memory, search_memory
 from keyboards.inline import quality_kb
 
 logger = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ async def handle_any_text(message):
             info = await asyncio.to_thread(thumbnail, message.text)
             title_memory[message.from_user.id] = info["title"]
             thumb_url = info["thumbnail"]
-            memory[message.from_user.id] = message.text
+            link_memory[message.from_user.id] = message.text
             sent_photo = await message.answer_photo(thumb_url, caption=info["title"], reply_markup=quality_kb)
             photo_msg_memory[message.from_user.id] = sent_photo
         except Exception:
