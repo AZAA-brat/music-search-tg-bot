@@ -2,8 +2,11 @@ from aiogram.types import CallbackQuery
 from aiogram import types
 import os
 import logging
+from PIL import Image
+
 from utils.dictionaries import photo_msg_memory
 from utils.phrases import get_text
+
 logger = logging.getLogger(__name__)
 async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, info, status_msg):
     try:
@@ -25,3 +28,5 @@ async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, in
         photo_msg = photo_msg_memory.get(callback.from_user.id)
         if photo_msg:
             await photo_msg.delete()
+
+

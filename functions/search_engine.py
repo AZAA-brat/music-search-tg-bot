@@ -1,5 +1,5 @@
 import yt_dlp
-def search_songs(query):
-    ytsearch10 = {"simulate": True}
-    with yt_dlp.YoutubeDL(ytsearch10) as yts:
-        return yts.extract_info(f"ytsearch10:{query}")
+def search_songs(query, count=10):
+    options = {"simulate": True}
+    with yt_dlp.YoutubeDL(options) as yts:
+        return yts.extract_info(f"ytsearch{count}:{query}")

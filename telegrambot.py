@@ -8,10 +8,11 @@ import handlers.language as language
 import handlers.link_downloader as link_downloader
 import handlers.start as start
 import handlers.user_choice as user_choice
+import handlers.four_choice as four_choice
 
 load_dotenv()
 setup_logger()
-dp.include_routers(start.router, choice_handler.router, language.router, link_downloader.router, user_choice.router)
+dp.include_routers(start.router, choice_handler.router, language.router, link_downloader.router, user_choice.router, four_choice.router)
 logger = logging.getLogger(__name__)
 
 async def main():

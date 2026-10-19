@@ -8,3 +8,6 @@ class PickCB(CallbackData, prefix="pick"):
 
 class AudioCB(CallbackData, prefix="audio"):
     audio: str
+
+class ChoiceCB(CallbackData, prefix="choice"):
+    choice: str
