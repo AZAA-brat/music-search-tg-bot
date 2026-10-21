@@ -10,7 +10,9 @@ phrases = {
     "error_photo_post": {"ru": "Похоже, это пост с фото — пока не поддерживается", "en": "This looks like a photo post — not supported yet"},
     "resend": {"ru": "Отправьте ссылку ещё раз", "en": "Resend the link"},
     "unknown": {"ru": "Неизвестный", "en": "Unknown"},
-    "choice": {"ru": "Какую музыку выберем?", "en": "What music you want to choose?"}
+    "choice": {"ru": "Какую музыку выберем?", "en": "What music you want to choose?"},
+    "next": {"ru": "Следующий ➡️", "en": "Next ➡️"},
+    "back": {"ru": "⬅️ Назад ", "en": "⬅️ Back"}
 }
 
 def get_text(label, user_id):

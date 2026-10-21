@@ -10,10 +10,3 @@ quality_kb = InlineKeyboardMarkup(inline_keyboard=[
     [types.InlineKeyboardButton(text="🎵 audio", callback_data=AudioCB(audio="mp3").pack())]
 ]
 )
-choice_kb = InlineKeyboardMarkup(inline_keyboard=[
-    [types.InlineKeyboardButton(text="Focus music", callback_data=ChoiceCB(choice="focus_music").pack()),
-     types.InlineKeyboardButton(text="Lofi music", callback_data=ChoiceCB(choice="lofi_music").pack())],
-    [types.InlineKeyboardButton(text="Vibe music", callback_data=ChoiceCB(choice="vibe_music").pack()),
-     types.InlineKeyboardButton(text="Deephouse music", callback_data=ChoiceCB(choice="deephouse_music").pack())],
-]
-)

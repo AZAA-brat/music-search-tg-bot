@@ -11,3 +11,6 @@ class AudioCB(CallbackData, prefix="audio"):
 
 class ChoiceCB(CallbackData, prefix="choice"):
     choice: str
+
+class PageCB(CallbackData, prefix="page"):
+    page: int
