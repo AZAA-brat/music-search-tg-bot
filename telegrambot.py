@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import asyncio
 import logging
 from logging_config import setup_logger
+load_dotenv()
 from config import bot, dp
 import handlers.choice_handler as choice_handler
 import handlers.language as language
@@ -10,7 +11,6 @@ import handlers.start as start
 import handlers.user_choice as user_choice
 import handlers.next_and_back as next_and_back
 
-load_dotenv()
 setup_logger()
 dp.include_routers(start.router, choice_handler.router, next_and_back.router, language.router, link_downloader.router, user_choice.router)
 logger = logging.getLogger(__name__)

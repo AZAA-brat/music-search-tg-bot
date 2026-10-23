@@ -18,14 +18,18 @@ router = Router()
 async def handle_user_choice(callback: CallbackQuery, callback_data: PickCB):
     try:
         index = callback_data.index - 1
-        chosen = search_memory[callback.from_user.id][index]
+        entries = search_memory.get(callback.from_user.id)
+        if not entries:
+            await callback.message.answer(get_text("resend", callback.from_user.id))
+            return
+        chosen = entries[index]
         link = chosen['webpage_url']
         options = audio_options(callback.from_user.id)
+        status_msg = await callback.message.answer("⌛️")
         info = await asyncio.to_thread(download_media, link, options)
     except Exception:
         logger.error("Error downloading media", exc_info=True)
         await callback.message.answer(get_text("error_download", callback.from_user.id))
         return
-    status_msg = await callback.message.answer("⌛️")
     file_path = f"downloads/{callback.from_user.id}.mp3"
     await send_media(callback, file_path, False, info, status_msg)

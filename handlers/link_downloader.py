@@ -38,7 +38,7 @@ async def handle_any_text(message):
             await message.answer(get_text("error_search", message.from_user.id))
             return
         search_memory[message.from_user.id] = result_url
-        text, keyboard = firstslice(result_url[0:10][11:20][21:30], message.from_user.id)
+        text, keyboard = firstslice(result_url, message.from_user.id)
         header = get_text("search_results", message.from_user.id)
         text = header + "\n\n" + text
         await message.answer(text, reply_markup=keyboard)

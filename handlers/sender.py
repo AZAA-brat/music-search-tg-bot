@@ -24,7 +24,12 @@ async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, in
         if os.path.exists(file_path):
             os.remove(file_path)
         await status_msg.delete()
-        photo_msg = photo_msg_memory.pop(callback.from_user.id)
+        photo_msg = photo_msg_memory.pop(callback.from_user.id, None)
+        if photo_msg:
+            try:
+                await photo_msg.delete()
+            except Exception:
+                logger.warning("Couldn't delete photo message", exc_info=True)
         if photo_msg:
             await photo_msg.delete()
 
