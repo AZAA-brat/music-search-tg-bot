@@ -6,15 +6,15 @@ The interface is in Russian by default, with an RU/EN language picker available 
 
 ## Features
 
-- **Link downloads:** Paste a YouTube, Instagram, or TikTok link to get a thumbnail and a quality choice: 360p, 480p, 720p, 1080p, or audio only.
-- **Text search:** Type a song or artist name to see a numbered list of up to 10 matching results. Pick one to download it as audio.
-- **Instagram audio:** Instagram links include a "download audio" button. The bot searches for the track using the post's caption, since captions are often generic and results can be imprecise.
+- **Link downloads:** Paste a YouTube, Instagram, or TikTok link to get a thumbnail and a quality choice: 480p, 720p, or audio only.
+- **Text search:** Type a song or artist name to see a numbered list of up to 30 matching results. Pick one to download it as audio.
+- **Instagram audio/Tiktok audio:** Instagram links and Tiktok include a "download audio" button. The bot searches for the track using the post's caption, since captions are often generic and results can be imprecise.
 - **Language support:** Russian and English, selectable on `/start`.
 - **Clean chat:** Status and thumbnail messages are removed once the file is sent. Captions include the title, uploader, and a bot footer.
 
 ## Limitations
 
-- Instagram audio search relies on caption text, not audio recognition, so matches are sometimes wrong.
+- Instagram audio search relies on caption text, not audio recognition, so matches are sometimes wrong, therefore It downloads only clip.
 - Photo-only Instagram posts aren't supported. The bot replies with a message saying so.
 - Downloaded files and in-memory state are lost when the bot restarts.
 
@@ -35,6 +35,10 @@ music-search-tg-bot/
 ├── telegrambot.py        # Entry point: registers routers and starts polling
 ├── config.py             # Loads BOT_TOKEN and creates the Bot and Dispatcher
 ├── logging_config.py     # Logging setup
+├── .gitignore            # Well, you know what is this for
+├── requirements.txt      # Latest versions of modules
+├── .env.example          # How you token variable should look like
+├── README.md             # Description of the project
 ├── keyboards/            # All keyboard layouts, kept out of handlers
 │   ├── callbacks.py      # Callback prefixes and data classes for inline buttons
 │   ├── inline.py         # Inline keyboards: quality, search results, Instagram audio
@@ -44,13 +48,16 @@ music-search-tg-bot/
 │   ├── language.py       # Saves the chosen language from the reply keyboard
 │   ├── link_downloader.py  # Handles pasted links and text searches
 │   ├── downloader.py     # Instagram "download audio" button
-│   ├── choice_handler.py # Quality buttons (360p to 1080p, audio)
-│   └── user_choice.py    # Picks a result from a search list
+│   ├── choice_handler.py # Quality buttons (480p to 720p, audio)
+│   ├── user_choice.py    # Picks a result from a search list
+│   ├── sender.py         # sends files and cleans up 
+│   └── next_and_back.py  # page navigation for search results
 ├── functions/            # Non-Telegram logic
 │   ├── thumbnail.py      # Fetches a link's title and thumbnail
 │   ├── search_engine.py  # Searches YouTube for up to 10 results
 │   ├── extractor.py      # Downloads media with yt-dlp
 │   ├── slicer.py         # Formats the result list text
+│   ├── options.py        # Both video and audio format options stored here
 │   └── cleaner.py        # Removes hashtags from titles
 └── utils/
     ├── phrases.py        # RU/EN text strings and language lookup
