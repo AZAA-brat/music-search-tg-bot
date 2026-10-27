@@ -11,7 +11,8 @@ phrases = {
     "resend": {"ru": "Отправьте ссылку ещё раз", "en": "Resend the link"},
     "unknown": {"ru": "Неизвестный", "en": "Unknown"},
     "next": {"ru": "Следующий ➡️", "en": "Next ➡️"},
-    "back": {"ru": "⬅️ Назад ", "en": "⬅️ Back"}
+    "back": {"ru": "⬅️ Назад ", "en": "⬅️ Back"},
+    "error_timeout": {"ru": "Процесс скачивания занял много времени", "en": "Took too long to download"}
 }
 
 def get_text(label, user_id):

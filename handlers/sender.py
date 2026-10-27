@@ -1,5 +1,6 @@
 from aiogram.types import CallbackQuery
 from aiogram import types
+from aiogram.exceptions import TelegramNetworkError
 import os
 import logging
 
@@ -20,6 +21,9 @@ async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, in
     except Exception:
         logger.exception("Couldn't send media file")
         await callback.message.answer(get_text("error_download", callback.from_user.id))
+    except TelegramNetworkError:
+        logger.error("Took too much time to download")
+        await callback.message.answer(get_text("error_timeout", callback.from_user.id))
     finally:
         try:
             if os.path.exists(file_path):
