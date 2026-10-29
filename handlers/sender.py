@@ -6,11 +6,13 @@ import logging
 
 from utils.dictionaries import photo_msg_memory
 from utils.phrases import get_text
+from utils.filename import safe_filename
 
 logger = logging.getLogger(__name__)
 async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, info, status_msg):
     try:
-        media_file = types.FSInputFile(file_path)
+        ext = ".mp4" if is_video else ".mp3"
+        media_file = types.FSInputFile(file_path, filename=safe_filename(info['title']) + ext)
         caption = f"{info['title']}, {info.get('uploader', get_text('unknown', callback.from_user.id))}"
         if is_video:
             await callback.message.answer_video(media_file, caption=caption + f"\n{get_text('bot_footer', callback.from_user.id)}")
@@ -18,12 +20,12 @@ async def send_media(callback: CallbackQuery, file_path: str, is_video: bool, in
             title = info['title']
             performer = info.get('artist') or info.get('uploader', get_text('unknown', callback.from_user.id))
             await callback.message.answer_audio(media_file, caption=caption + f"\n{get_text('bot_footer', callback.from_user.id)}", title=title, performer=performer)
-    except Exception:
-        logger.exception("Couldn't send media file")
-        await callback.message.answer(get_text("error_download", callback.from_user.id))
     except TelegramNetworkError:
         logger.error("Took too much time to download")
         await callback.message.answer(get_text("error_timeout", callback.from_user.id))
+    except Exception:
+        logger.exception("Couldn't send media file")
+        await callback.message.answer(get_text("error_download", callback.from_user.id))
     finally:
         try:
             if os.path.exists(file_path):
