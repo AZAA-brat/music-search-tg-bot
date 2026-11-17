@@ -1,6 +1,5 @@
-from aiogram import types, Router
+from aiogram import Router
 import asyncio
-import os
 import logging
 from aiogram.types import CallbackQuery
 
