@@ -2,4 +2,4 @@
 .venv
 downloads/
 __pycache__/
-.idea
+.idea/

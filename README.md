@@ -32,36 +32,39 @@ No database. State is kept in memory.
 
 ```
 music-search-tg-bot/
-├── telegrambot.py        # Entry point: registers routers and starts polling
-├── config.py             # Loads BOT_TOKEN and creates the Bot and Dispatcher
-├── logging_config.py     # Logging setup
-├── .gitignore            # Well, you know what is this for
-├── requirements.txt      # Latest versions of modules
-├── .env.example          # How you token variable should look like
-├── README.md             # Description of the project
-├── keyboards/            # All keyboard layouts, kept out of handlers
-│   ├── callbacks.py      # Callback prefixes and data classes for inline buttons
-│   ├── inline.py         # Inline keyboards: quality, search results, Instagram audio
-│   └── reply.py          # Reply keyboards: language picker on /start
-├── handlers/             # Telegram message and button handlers
-│   ├── start.py          # /start and language picker
-│   ├── language.py       # Saves the chosen language from the reply keyboard
+├── telegrambot.py          # Entry point: registers routers and starts polling
+├── config.py               # Loads BOT_TOKEN and creates the Bot and Dispatcher
+├── logging_config.py       # Logging setup
+├── .gitignore              # Well, you know what is this for
+├── requirements.txt        # Latest versions of modules
+├── .env.example            # How you token variable should look like
+├── README.md               # Description of the project
+├── Dockerfile              # For deployment
+├── .dockerignore           # Same as .gitignore 
+├── keyboards/              # All keyboard layouts, kept out of handlers
+│   ├── callbacks.py        # Callback prefixes and data classes for inline kb 
+│   ├── inline.py           # Inline keyboards: quality, search results, audio
+│   └── reply.py            # Reply keyboards: language picker on /start
+├── handlers/               # Telegram message and button handlers
+│   ├── start.py            # /start and language picker
+│   ├── language.py         # Saves the chosen language from the reply keyboard
 │   ├── link_downloader.py  # Handles pasted links and text searches
-│   ├── downloader.py     # Instagram "download audio" button
-│   ├── choice_handler.py # Quality buttons (480p to 720p, audio)
-│   ├── user_choice.py    # Picks a result from a search list
-│   ├── sender.py         # sends files and cleans up 
-│   └── next_and_back.py  # page navigation for search results
-├── functions/            # Non-Telegram logic
-│   ├── thumbnail.py      # Fetches a link's title and thumbnail
-│   ├── search_engine.py  # Searches YouTube for up to 10 results
-│   ├── extractor.py      # Downloads media with yt-dlp
-│   ├── slicer.py         # Formats the result list text
-│   ├── options.py        # Both video and audio format options stored here
-│   └── cleaner.py        # Removes hashtags from titles
+│   ├── quility_handler.py  # Quality buttons (480p to 720p)
+│   ├── audio_hanldler.py   # Audio button 
+│   ├── user_choice.py      # Picks a result from a search list
+│   ├── sender.py           # sends files and cleans up 
+│   └── next_and_back.py    # page navigation for search results
+├── functions/              # Non-Telegram logic
+│   ├── thumbnail.py        # Fetches a link's title and thumbnail
+│   ├── search_engine.py    # Searches YouTube for up to 10 results
+│   ├── extractor.py        # Downloads media with yt-dlp
+│   ├── slicer.py           # Formats the result list text
+│   ├── options.py          # Both video and audio format options stored here
+│   └── cleaner.py          # Removes hashtags from titles
 └── utils/
-    ├── phrases.py        # RU/EN text strings and language lookup
-    └── dictionaries.py   # In-memory state per user
+    ├── phrases.py          # RU/EN text strings and language lookup
+    ├── filename.py         # Filters forbidden chars
+    └── dictionaries.py     # In-memory state per user
 ```
 
 ## Setup
